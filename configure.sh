@@ -10,11 +10,12 @@ if pkg_exists solo5-bindings-hvt solo5-bindings-spt solo5-bindings-virtio solo5-
     exit 1
 fi
 PKG_CONFIG_DEPS=
-pkg_exists solo5-bindings-hvt && PKG_CONFIG_DEPS=solo5-bindings-hvt
-pkg_exists solo5-bindings-spt && PKG_CONFIG_DEPS=solo5-bindings-spt
-pkg_exists solo5-bindings-muen && PKG_CONFIG_DEPS=solo5-bindings-muen
-pkg_exists solo5-bindings-virtio && PKG_CONFIG_DEPS=solo5-bindings-virtio
-pkg_exists solo5-bindings-genode && PKG_CONFIG_DEPS=solo5-bindings-genode
+pkg_exists solo5-bindings-hvt && PKG_CONFIG_DEPS=solo5-bindings-hvt && NOLIBC_SYSDEP_OBJS=sysdeps_solo5.o
+pkg_exists solo5-bindings-spt && PKG_CONFIG_DEPS=solo5-bindings-spt && NOLIBC_SYSDEP_OBJS=sysdeps_solo5.o
+pkg_exists solo5-bindings-muen && PKG_CONFIG_DEPS=solo5-bindings-muen && NOLIBC_SYSDEP_OBJS=sysdeps_solo5.o
+pkg_exists solo5-bindings-virtio && PKG_CONFIG_DEPS=solo5-bindings-virtio && NOLIBC_SYSDEP_OBJS=sysdeps_solo5.o
+pkg_exists solo5-bindings-genode && PKG_CONFIG_DEPS=solo5-bindings-genode && NOLIBC_SYSDEP_OBJS=sysdeps_solo5.o
+pkg_exists libxenplat && PKG_CONFIG_DEPS=libxenplat && NOLIBC_SYSDEP_OBJS=sysdeps_xen.o
 if [ -z "${PKG_CONFIG_DEPS}" ]; then
     echo "ERROR: No supported Solo5 bindings package found." 1>&2
     echo "ERROR: solo5-bindings-hvt, solo5-bindings-spt, solo5-bindings-virtio, solo5-bindings-muen, or solo5-bindings-genode must be installed." 1>&2
@@ -23,6 +24,7 @@ fi
 ocamlfind query ocaml-src >/dev/null || exit 1
 
 FREESTANDING_CFLAGS="$(pkg-config --cflags ${PKG_CONFIG_DEPS})"
+
 BUILD_ARCH=$(uname -m)
 BUILD_OS=$(uname -s)
 
@@ -102,7 +104,7 @@ cat <<EOM >Makeconf
 FREESTANDING_CFLAGS=${FREESTANDING_CFLAGS}
 BUILD_ARCH=${BUILD_ARCH}
 BUILD_OS=${BUILD_OS}
-NOLIBC_SYSDEP_OBJS=sysdeps_solo5.o
+NOLIBC_SYSDEP_OBJS=${NOLIBC_SYSDEP_OBJS}
 PKG_CONFIG_DEPS=${PKG_CONFIG_DEPS}
 PKG_CONFIG_EXTRA_LIBS=${PKG_CONFIG_EXTRA_LIBS}
 OCAML_EXTRA_DEPS=${OCAML_EXTRA_DEPS}
