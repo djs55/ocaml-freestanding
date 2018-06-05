@@ -2,6 +2,14 @@
 #define _UNISTD_H
 
 #include <sys/types.h>
+#if (!defined __DEFINED_ssize_t)
+typedef int ssize_t;
+#define __DEFINED_ssize_t
+#endif
+#if (!defined __DEFINED_off_t)
+typedef int off_t;
+#define __DEFINED_off_t
+#endif
 
 int chdir(const char *);
 int close(int);
