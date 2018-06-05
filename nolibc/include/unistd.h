@@ -10,6 +10,9 @@ typedef int ssize_t;
 typedef int off_t;
 #define __DEFINED_off_t
 #endif
+#ifdef __MINIOS__
+#include <sys/types.h>
+#endif
 
 int chdir(const char *);
 int close(int);
