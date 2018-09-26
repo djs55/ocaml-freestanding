@@ -9,5 +9,7 @@ extern int errno;
 #define ENOENT 5
 #define EINVAL 6
 #define ENOMEM 7
+#define EBUSY 16
+#define ENOTSUP 97
 
 #endif
