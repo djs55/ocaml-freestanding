@@ -69,7 +69,7 @@ build/ocaml/runtime/caml/version.h: build/ocaml/Makefile.config
 build/ocaml/byterun/caml/version.h: build/ocaml/config/Makefile
 	build/ocaml/tools/make-version-header.sh > $@
 
-OCAML_CFLAGS=-O2 -fno-strict-aliasing -fwrapv -Wall -USYS_linux -DHAS_UNISTD $(FREESTANDING_CFLAGS)
+OCAML_CFLAGS=-O2 -fno-builtin-fprintf -fno-strict-aliasing -fwrapv -Wall -USYS_linux -DHAS_UNISTD $(FREESTANDING_CFLAGS)
 OCAML_CFLAGS+=-I$(TOP)/build/openlibm/include -I$(TOP)/build/openlibm/src
 ifeq ($(OCAML_GTE_4_08_0),yes)
 build/ocaml/runtime/libasmrun.a: build/ocaml/Makefile.common build/ocaml/Makefile.config build/openlibm/Makefile $(OCAML_EXTRA_DEPS)
