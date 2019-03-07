@@ -7,6 +7,7 @@
 #include <math.h>
 #include <float.h>
 #include <stdint.h>
+#include <inttypes.h>
 
 /* Some useful macros */
 
